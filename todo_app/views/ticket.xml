@@ -1,0 +1,56 @@
+<odoo>
+
+<!--    create View -->
+    <record id="ticket_tree_view" model="ir.ui.view">
+        <field name="name">ticket.tree.view</field>
+        <field name="model">todo.app.ticket</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="number"/>
+                <field name="description"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+<!--    create form view -->
+    <record id="ticket_form_view" model="ir.ui.view">
+        <field name="name">ticket.form.view</field>
+        <field name="model">todo.app.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="General Info.">
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="state"/>
+                        </group>
+                        <group string="Additional Info.">
+                            <field name="number"/>
+                            <field name="tag"/>
+                            <field name="file"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="todo_ticket_action" model="ir.actions.act_window">
+    <field name="name">Todo Tickets</field>
+    <field name="res_model">todo.app.ticket</field>
+    <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menuitem_todo_ticket"
+          name="All Tickets"
+          parent="menu_root_ticket"
+          action="todo_ticket_action"/>
+
+    <menuitem id="menuitem_todo_myticket"
+          name="My Tickets"
+          parent="menu_root_ticket"
+          action="todo_ticket_action"/>
+</odoo>
