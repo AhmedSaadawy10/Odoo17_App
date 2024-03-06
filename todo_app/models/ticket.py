@@ -3,7 +3,6 @@ from odoo import fields, models
 
 class Ticket(models.Model):
     _name = 'todo.app.ticket'
-    _description = 'Ticket'
 
     name = fields.Char(string="Name")
     description = fields.Text(string="Description")
