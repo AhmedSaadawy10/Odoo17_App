@@ -1,0 +1,27 @@
+<odoo>
+    <!--Define Tree View for "Departments" menu-->
+    <record id="departments_tree_view" model="ir.ui.view">
+        <field name="name">Departments Tree View</field>
+        <field name="model">hms.department</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Department Name"/>
+                <field name="is_opened" string="Opened"/>
+                <field name="capacity" string="Capacity"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="hms_department_action" model="ir.actions.act_window">
+        <field name="name">Department</field>
+        <field name="res_model">hms.department</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_root_department"
+              name="Departments"
+              parent="menu_hms"
+              action="hms_department_action"/>
+
+</odoo>
