@@ -1,11 +1,12 @@
 <odoo>
- <!--Define The Tree View For "Patient Information" child menu item-->
+    <data>
+        <!--Define The Tree View For "Patient Information" child menu item-->
         <record id="Patient_Tree_View" model="ir.ui.view">
             <field name="name">Patient Tree View</field>
             <field name="model">hms.patient</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="id" optional="1" />
+                    <field name="id" optional="1"/>
                     <field name="f_name"/>
                     <field name="l_name"/>
                     <field name="birthdate"/>
@@ -14,39 +15,65 @@
             </field>
         </record>
 
-    <!--Define The Form View For "Patient Information" child menu item-->
+        <!--Define The Form View For "Patient Information" child menu item-->
         <record id="Patient_Form_View" model="ir.ui.view">
             <field name="name">Patient Form View</field>
             <field name="model">hms.patient</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="action_add_history" string="Add History" type="object"
+                            class="btn btn-primary"/>
+                        <button name="action_undetermined" type="object" string="Set To Undetermined" class="btn btn-outline-primary" invisible="state != 'good'"/>
+                        <button name="action_good" type="object" string="Good" class="btn btn-outline-success" invisible="state != 'undetermined'"/>
+                        <button name="action_fair" type="object" string="Fair" class="btn btn-outline-info" invisible="state != 'good'"/>
+                        <button name="action_serious" type="object" string="Serious" class="btn btn-outline-danger" invisible="state != 'good'"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
                     <sheet>
                         <group>
 
                             <group string="Patient Info">
-                                <field name="f_name" />
-                                <field name="l_name" />
-                                <field name="email" />
-                                <field name="birthdate" />
-                                <field name="age" />
-                                <field name="department_id" />
+                                <field name="f_name"/>
+                                <field name="l_name"/>
+                                <field name="email"/>
+                                <field name="birthdate"/>
+                                <field name="age"/>
+                                <field name="department_id" domain="[('is_opened', '=', 'True')]"/>
                                 <field name="department_capacity"/>
+                                 <field name="doctors_ids"  widget="many2many_tags" readonly="department_id == False"/>
+                                <field name="cr_ratio" required="pcr == True"/>
                                 <field name="state"/>
                             </group>
 
                             <group string="Blood Info">
-                                <field name="blood_type" />
+                                <field name="blood_type"/>
                                 <field name="pcr"/>
                             </group>
 
                             <notebook>
+                                <!--History log page-->
+                                <page string="HISTORY LOG">
+                                    <field name="history_ids" invisible="age &lt; 50">
+                                        <!--View on the fly-->
+                                        <tree>
+                                            <field name="patient_id" string="Created by" readonly="True"/>
+                                            <field name="current_date" string="Date" readonly="True"/>
+                                            <field name="description" string="Description"/>
+                                        </tree>
+                                    </field>
+                                </page>
                                 <!--Address page-->
                                 <page string="ADDRESS">
-                                    <group> <field name="address"/> </group>
+                                    <group>
+                                        <field name="address"/>
+                                    </group>
                                 </page>
                                 <!--Image page-->
                                 <page string="IMAGE">
-                                    <group> <field name="image"/> </group>
+                                    <group>
+                                        <field name="image" widget="image"/>
+                                    </group>
                                 </page>
                             </notebook>
 
@@ -56,15 +83,15 @@
             </field>
         </record>
 
-    <record id="hms_patient_action" model="ir.actions.act_window">
-        <field name="name">Patients</field>
-        <field name="res_model">hms.patient</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+        <record id="hms_patient_action" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="res_model">hms.patient</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-    <menuitem id="menu_root_patient"
-              name="Patients"
-              parent="menu_hms"
-              action="hms_patient_action"/>
-
+        <menuitem id="menu_root_patient"
+                  name="Patients"
+                  parent="menu_hms"
+                  action="hms_patient_action"/>
+    </data>
 </odoo>
