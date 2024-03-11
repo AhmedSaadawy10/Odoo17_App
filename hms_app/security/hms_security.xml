@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+
+        <!--Define Record Rules To View Only Patient Created-->
+        <record id="view_created_patient_only_rule" model="ir.rule">
+            <field name="name">View Created Patients only</field>
+            <field name="model_id" ref="hms_app.model_hms_patient"/>
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+        </record>
+
+        <!--Define Record Rules To View all Patient Created-->
+        <record id="view_created_patient_only_rule" model="ir.rule">
+            <field name="name">View all Created Patients</field>
+            <field name="model_id" ref="hms_app.model_hms_patient"/>
+            <field name="domain_force">[('create_uid', '=', 'user_id')]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+
+        </record>
+
+        <!--Define Category of groups-->
+        <record id="hms_groups_category" model="ir.module.category">
+            <field name="name">HMS</field>
+        </record>
+
+        <!--Define New User Group "HMS User Group" -->
+        <record id="hms_users_group" model="res.groups">
+            <field name="name">HMS User Group</field>
+            <field name="category_id" ref="hms_app.hms_groups_category"/>
+        </record>
+
+        <!--Define New User Group "HMS Manager Group" -->
+        <record id="hms_managers_group" model="res.groups">
+            <field name="name">HMS Manager Group</field>
+            <field name="category_id" ref="hms_app.hms_groups_category"/>
+        </record>
+    </data>
+</odoo>

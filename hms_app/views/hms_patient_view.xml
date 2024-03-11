@@ -41,7 +41,7 @@
                                 <field name="age"/>
                                 <field name="department_id" domain="[('is_opened', '=', 'True')]"/>
                                 <field name="department_capacity"/>
-                                 <field name="doctors_ids"  widget="many2many_tags" readonly="department_id == False"/>
+                                 <field name="doctors_ids" groups="hms_app.hms_managers_group"  widget="many2many_tags" readonly="department_id == False"/>
                                 <field name="cr_ratio" required="pcr == True"/>
                                 <field name="state"/>
                             </group>

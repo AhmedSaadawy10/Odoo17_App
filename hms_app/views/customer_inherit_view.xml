@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <!--Define Customers Tree View inherited-->
+        <record id="customers_tree_view_inherited" model="ir.ui.view">
+            <field name="name">Customers Tree View Inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="website"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Define Customers Form View inherited-->
+        <record id="customers_form_view_inherited" model="ir.ui.view">
+            <field name="name">Customers Form View Inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='sales_purchases']//group[@name='misc']" position="inside">
+                    <field name="related_patient_id" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
